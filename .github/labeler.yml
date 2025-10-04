@@ -1,0 +1,81 @@
+labels:
+  # Type: Recent changes
+  - name: "@type/new"
+    conditions:
+      - lastModified:
+          atMost: 1d
+
+  # Type: Old changes
+  - name: "@type/old"
+    conditions:
+      - lastModified:
+          atLeast: 30d
+
+  # Type: Build-related changes
+  - name: "@type/build"
+    conditions:
+      - title: '^build(?:\(.+\))?!?:'
+
+  # Type: CI-related changes
+  - name: "@type/ci"
+    conditions:
+      - title: '^ci(?:\(.+\))?!?:'
+      - files: '\.github/.+'
+
+  # Type: Documentation changes
+  - name: "@type/docs"
+    conditions:
+      - title: '^docs(?:\(.+\))?!?:'
+      - files: 'docs/.+'
+      - files: '**/*.md'
+
+  # Type: New feature
+  - name: "@type/feature"
+    conditions:
+      - title: '^feat(?:\(.+\))?!?:'
+
+  # Type: Bug fix
+  - name: "@type/fix"
+    conditions:
+      - title: '^fix(?:\(.+\))?!?:'
+
+  # Type: Improvements such as style changes, refactoring, or performance improvements
+  - name: "@type/improve"
+    conditions:
+      - title: '^(style|refactor|perf)(?:\(.+\))?!?:'
+
+  # Type: Dependency changes
+  - name: "@type/dependency"
+    conditions:
+      - title: '^(chore|build)(?:\(deps\))?!?:'
+
+  # Type: Test-related changes
+  - name: "@type/test"
+    conditions:
+      - title: '^test(?:\(.+\))?!?:'
+      - files: 'tests/.+'
+      - files: 'spec/.+'
+
+  # Type: Security-related changes
+  - name: "@type/security"
+    conditions:
+      - title: '^security(?:\(.+\))?!?:'
+      - files: '**/security/.+'
+
+  # Issue Type Only: Feature Request
+  - name: "Feature Request"
+    type: issue
+    conditions:
+      - title: "^Feature Request:"
+
+  # Issue Type Only: Documentation
+  - name: "Documentation"
+    type: issue
+    conditions:
+      - title: "^.*(\b[Dd]ocumentation|doc(s)?\b).*"
+
+  # Issue Type Only: Bug Report
+  - name: "Bug Report"
+    type: issue
+    conditions:
+      - title: "^.*(\b[Bb]ug|b(u)?g(s)?\b).*"
