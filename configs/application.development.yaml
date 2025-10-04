@@ -1,0 +1,52 @@
+app:
+  name: customers-write-service
+  logger: main
+
+container:
+  type: dig
+
+http-servers:
+  instances:
+    customers-write-service:
+      type: echo
+      host: 127.0.0.1
+      port: 8000
+      debug: true
+      logger: main-http-server
+
+rpc-servers:
+  instances:
+    customers-write-service:
+      type: grpc
+      host: 127.0.0.1
+      port: 9000
+      debug: true
+      logger: main-rpc-server
+
+database-clients:
+  instances:
+    customers-write-service:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: admin
+      password: admin
+      database: customers-write-service
+      sslMode: false
+
+loggers:
+  type: logrus
+  level: debug
+  instances:
+    main:
+      prefix: customers-write-service
+    main-http-server:
+      prefix: customers-write-service (http-server)
+    main-rpc-server:
+      prefix: customers-write-service (rpc-server)
+
+migrations:
+  instances:
+    customers-write-service:
+      db: customers-write-service
+      migrationsDir: db/migrations

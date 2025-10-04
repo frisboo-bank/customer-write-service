@@ -1,0 +1,14 @@
+version: "2"
+cloud:
+  organization: "frisboo-bank"
+  project: "customers-write-service"
+  hostname: "localhost"
+sql:
+  - engine: postgresql
+    queries: db/queries.sql
+    schema: db/schema.sql
+    gen:
+      go:
+        package: db
+        out: internal/db
+        sql_package: pgx/v5
