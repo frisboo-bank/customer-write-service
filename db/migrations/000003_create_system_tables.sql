@@ -61,11 +61,11 @@ CREATE TABLE sagas (
 -- Triggers
 CREATE TRIGGER trg_snapshots_row_metadata
 BEFORE UPDATE ON snapshots
-FOR EACH ROW EXECUTE PROCEDURE set_row_metadata();
+FOR EACH ROW EXECUTE FUNCTION set_row_metadata();
 
 CREATE TRIGGER trg_sagas_row_metadata
 BEFORE UPDATE ON sagas
-FOR EACH ROW EXECUTE PROCEDURE set_row_metadata();
+FOR EACH ROW EXECUTE FUNCTION set_row_metadata();
 
 -- RLS
 ALTER TABLE events ENABLE ROW LEVEL SECURITY;
