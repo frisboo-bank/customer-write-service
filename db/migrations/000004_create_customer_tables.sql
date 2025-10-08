@@ -151,12 +151,7 @@ ALTER TABLE customer_emails ENABLE ROW LEVEL SECURITY;
 ALTER TABLE customer_phone_numbers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE customer_nationalities ENABLE ROW LEVEL SECURITY;
 
-
-
-
-
 -- +goose Down
-
 DROP TABLE IF EXISTS customer_addresses;
 DROP TABLE IF EXISTS customer_emails;
 DROP TABLE IF EXISTS customer_nationalities;
