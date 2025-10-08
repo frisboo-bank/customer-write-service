@@ -114,35 +114,35 @@ WHERE deleted_at IS NULL;
 -- Triggers
 CREATE TRIGGER trg_customers_row_metadata
 BEFORE UPDATE ON customers
-FOR EACH ROW EXECUTE PROCEDURE set_row_metadata();
+FOR EACH ROW EXECUTE FUNCTION set_row_metadata();
 
 CREATE TRIGGER trg_customer_addresses_row_metadata
 BEFORE UPDATE ON customer_addresses
-FOR EACH ROW EXECUTE PROCEDURE set_row_metadata();
+FOR EACH ROW EXECUTE FUNCTION set_row_metadata();
 
 CREATE TRIGGER trg_customer_emails_row_metadata
 BEFORE UPDATE ON customer_emails
-FOR EACH ROW EXECUTE PROCEDURE set_row_metadata();
+FOR EACH ROW EXECUTE FUNCTION set_row_metadata();
 
 CREATE TRIGGER trg_customer_nationalities_row_metadata
 BEFORE UPDATE ON customer_nationalities
-FOR EACH ROW EXECUTE PROCEDURE set_row_metadata();
+FOR EACH ROW EXECUTE FUNCTION set_row_metadata();
 
 CREATE TRIGGER trg_customer_phone_numbers_row_metadata
 BEFORE UPDATE ON customer_phone_numbers
-FOR EACH ROW EXECUTE PROCEDURE set_row_metadata();
+FOR EACH ROW EXECUTE FUNCTION set_row_metadata();
 
 CREATE TRIGGER trg_customer_addresses_verified_ts
 BEFORE INSERT OR UPDATE ON customer_addresses
-FOR EACH ROW EXECUTE PROCEDURE set_verified_timestamp();
+FOR EACH ROW EXECUTE FUNCTION set_verified_timestamp();
 
 CREATE TRIGGER trg_customer_emails_verified_ts
 BEFORE INSERT OR UPDATE ON customer_emails
-FOR EACH ROW EXECUTE PROCEDURE set_verified_timestamp();
+FOR EACH ROW EXECUTE FUNCTION set_verified_timestamp();
 
 CREATE TRIGGER trg_customer_phone_numbers_verified_ts
 BEFORE INSERT OR UPDATE ON customer_phone_numbers
-FOR EACH ROW EXECUTE PROCEDURE set_verified_timestamp();
+FOR EACH ROW EXECUTE FUNCTION set_verified_timestamp();
 
 -- RLS
 ALTER TABLE customers ENABLE ROW LEVEL SECURITY;
@@ -151,12 +151,7 @@ ALTER TABLE customer_emails ENABLE ROW LEVEL SECURITY;
 ALTER TABLE customer_phone_numbers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE customer_nationalities ENABLE ROW LEVEL SECURITY;
 
-
-
-
-
 -- +goose Down
-
 DROP TABLE IF EXISTS customer_addresses;
 DROP TABLE IF EXISTS customer_emails;
 DROP TABLE IF EXISTS customer_nationalities;
