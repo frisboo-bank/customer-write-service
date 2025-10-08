@@ -1,5 +1,4 @@
 -- +goose Up
-
 -- Function: validate_of_age
 -- Determines if dob is at least 18 years before current_date.
 -- +goose StatementBegin
@@ -77,13 +76,7 @@ END;
 $$;
 -- +goose StatementEnd
 
-
-
-
-
 -- +goose Down
-
-DROP FUNCTION IF EXISTS audit_row_changes();
 DROP FUNCTION IF EXISTS set_row_metadata();
 DROP FUNCTION IF EXISTS set_verified_at();
 DROP FUNCTION IF EXISTS validate_of_age(date);

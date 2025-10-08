@@ -1,5 +1,4 @@
 -- +goose Up
-
 CREATE TABLE events (
     stream_id uuid NOT NULL,
     stream_name text NOT NULL,
@@ -86,19 +85,10 @@ ALTER TABLE sagas ENABLE ROW LEVEL SECURITY;
 --         'CREATE TABLE IF NOT EXISTS %I_%s PARTITION OF %I FOR VALUES FROM (%L) TO (%L);',
 --         'events', to_char(next_month,'YYYYMM'), 'events', next_month, part_end
 --     );
---   EXECUTE format(
---         'CREATE TABLE IF NOT EXISTS %I_%s PARTITION OF %I FOR VALUES FROM (%L) TO (%L);',
---         'audit_log', to_char(next_month,'YYYYMM'), 'audit_log', next_month, part_end
---   );
 -- END $$;
 -- +goose StatementEnd
 
-
-
-
-
 -- +goose Down
-
 DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS snapshots;
 DROP TABLE IF EXISTS inbox;
