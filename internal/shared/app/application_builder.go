@@ -10,11 +10,11 @@ type CustomersWriteApplicationBuilder struct {
 }
 
 func NewCustomersWriteApplicationBuilder() (*CustomersWriteApplicationBuilder, error) {
-	build, err := builder.NewApplicationBuilder()
+	b, err := builder.NewApplicationBuilder()
 	if err != nil {
 		return nil, err
 	}
-	return &CustomersWriteApplicationBuilder{build}, nil
+	return &CustomersWriteApplicationBuilder{b}, nil
 }
 
 func (b *CustomersWriteApplicationBuilder) Build() contracts.Application {

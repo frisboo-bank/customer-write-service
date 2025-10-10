@@ -1,6 +1,7 @@
 package customers
 
 import (
+	"frisboo-bank/customers-write-service/internal/customers"
 	"frisboo-bank/customers-write-service/internal/shared/configurations/customers/infrastructure"
 
 	applicationContracts "frisboo-bank/pkg/application/contracts"
@@ -15,6 +16,8 @@ func ModuleFunc(appBuilder applicationContracts.ApplicationBuilder) module.Modul
 		"customers",
 
 		infrastructure.ModuleFunc(appBuilder),
+
+		customers.ModuleFunc(appBuilder),
 	)
 
 	return m

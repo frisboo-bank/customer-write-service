@@ -1,6 +1,16 @@
 -- +goose Up
 CREATE TABLE customers (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    disabled_at timestamptz,
+    disabled_reason text,
+    deleted_at timestamptz,
+    deleted_reason text,
+    created_at timestamptz NOT NULL DEFAULT now(),
+    updated_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE TABLE customers_personal_details (
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     title text,
     first_name text,
     middle_name text,
@@ -15,13 +25,12 @@ CREATE TABLE customers (
     is_us_person bool NOT NULL DEFAULT false,
     marital_status_id text,
     number_of_dependents smallint NOT NULL DEFAULT 0 CHECK (number_of_dependents >= 0),
-    deleted_at timestamptz,
-    deleted_reason text,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now()
 );
 
-CREATE INDEX idx_customers_deleted_anonymized ON customers (deleted_at);
+CREATE INDEX idx_customers_deleted
+ON customers (deleted_at);
 
 CREATE TABLE customer_addresses (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -38,8 +47,7 @@ CREATE TABLE customer_addresses (
     postal_code text,
     country_code char(2),
     is_primary boolean NOT NULL DEFAULT false,
-    verified boolean NOT NULL DEFAULT false,
-    verified_at timestamptz CHECK (validate_verified(verified, verified_at)),
+    verified_at timestamptz,
     deleted_at timestamptz,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now()
@@ -53,14 +61,14 @@ CREATE TABLE customer_emails (
     customer_id uuid NOT NULL REFERENCES customers (id) ON DELETE CASCADE,
     email citext NOT NULL,
     is_primary boolean NOT NULL DEFAULT false,
-    verified boolean NOT NULL DEFAULT false,
-    verified_at timestamptz CHECK (validate_verified(verified, verified_at)),
+    verified_at timestamptz,
     deleted_at timestamptz,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now()
 );
 
-CREATE INDEX idx_customer_emails_customer ON customer_emails (customer_id);
+CREATE INDEX idx_customer_emails_customer
+ON customer_emails (customer_id);
 
 CREATE TABLE customer_nationalities (
     customer_id uuid NOT NULL REFERENCES customers (id) ON DELETE CASCADE,
@@ -80,8 +88,7 @@ CREATE TABLE customer_phone_numbers (
     country_code char(2) NOT NULL,
     phone_number text NOT NULL,
     is_primary boolean NOT NULL DEFAULT false,
-    verified boolean NOT NULL DEFAULT false,
-    verified_at timestamptz CHECK (validate_verified(verified, verified_at)),
+    verified_at timestamptz,
     deleted_at timestamptz,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now()
@@ -132,18 +139,6 @@ CREATE TRIGGER trg_customer_phone_numbers_row_metadata
 BEFORE UPDATE ON customer_phone_numbers
 FOR EACH ROW EXECUTE FUNCTION set_row_metadata();
 
-CREATE TRIGGER trg_customer_addresses_verified_ts
-BEFORE INSERT OR UPDATE ON customer_addresses
-FOR EACH ROW EXECUTE FUNCTION set_verified_timestamp();
-
-CREATE TRIGGER trg_customer_emails_verified_ts
-BEFORE INSERT OR UPDATE ON customer_emails
-FOR EACH ROW EXECUTE FUNCTION set_verified_timestamp();
-
-CREATE TRIGGER trg_customer_phone_numbers_verified_ts
-BEFORE INSERT OR UPDATE ON customer_phone_numbers
-FOR EACH ROW EXECUTE FUNCTION set_verified_timestamp();
-
 -- RLS
 ALTER TABLE customers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE customer_addresses ENABLE ROW LEVEL SECURITY;
@@ -156,4 +151,5 @@ DROP TABLE IF EXISTS customer_addresses;
 DROP TABLE IF EXISTS customer_emails;
 DROP TABLE IF EXISTS customer_nationalities;
 DROP TABLE IF EXISTS customer_phone_numbers;
+DROP TABLE IF EXISTS customers_personal_details;
 DROP TABLE IF EXISTS customers;
