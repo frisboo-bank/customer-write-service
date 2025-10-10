@@ -1,18 +1,16 @@
 package infrastructure
 
 import (
-	"frisboo-bank/pkg/application/builder"
 	"frisboo-bank/pkg/application/contracts"
 )
 
-type CustomersWriteApplicationInfrastructure struct {
-	contracts.ApplicationInfrastructure
+type InfrastructureConfigurator struct {
+	contracts.Application
 }
 
-func NewCustomersWriteApplicationInfrastructure(app contracts.Application) *CustomersWriteApplicationInfrastructure {
-	return &CustomersWriteApplicationInfrastructure{builder.NewApplicationInfrastructure(app)}
+func NewInfrastructureConfigurator(app contracts.Application) *InfrastructureConfigurator {
+	return &InfrastructureConfigurator{Application: app}
 }
 
-func (i *CustomersWriteApplicationInfrastructure) configureMediator() error {
-	return nil
+func (ic *InfrastructureConfigurator) ConfigureInfrastructures() {
 }

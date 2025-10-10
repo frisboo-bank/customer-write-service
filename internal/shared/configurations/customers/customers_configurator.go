@@ -4,22 +4,24 @@ import (
 	"fmt"
 	"net/http"
 
+	"frisboo-bank/customers-write-service/internal/customers/constants"
 	"frisboo-bank/customers-write-service/internal/shared/configurations/customers/infrastructure"
 
 	"frisboo-bank/pkg/application/contracts"
 	"frisboo-bank/pkg/container/dependencies/invoker"
 	httpServerContacts "frisboo-bank/pkg/http/http_server/contracts"
+
 	"github.com/labstack/echo/v4"
 	"go.uber.org/dig"
 )
 
 type CustomersWriteServiceConfigurator struct {
 	contracts.Application
-	infrastructureConfigurator *infrastructure.CustomersWriteApplicationInfrastructure
+	infrastructureConfigurator *infrastructure.InfrastructureConfigurator
 }
 
 func NewCustomersWriteServiceConfigurator(app contracts.Application) *CustomersWriteServiceConfigurator {
-	infraConfigurator := infrastructure.NewCustomersWriteApplicationInfrastructure(app)
+	infraConfigurator := infrastructure.NewInfrastructureConfigurator(app)
 
 	return &CustomersWriteServiceConfigurator{
 		Application:                app,
@@ -27,11 +29,8 @@ func NewCustomersWriteServiceConfigurator(app contracts.Application) *CustomersW
 	}
 }
 
-func (c *CustomersWriteServiceConfigurator) ConfigureCustomers() error {
-	if err := c.infrastructureConfigurator.ConfigureInfrastructure(); err != nil {
-		return err
-	}
-	return nil
+func (c *CustomersWriteServiceConfigurator) ConfigureCustomers() {
+	c.infrastructureConfigurator.ConfigureInfrastructures()
 }
 
 type mapCustomersEndpointsParams struct {
@@ -43,10 +42,10 @@ func (c *CustomersWriteServiceConfigurator) MapCustomersEndpoints() {
 	c.ResolveFunc(invoker.InvokerFunc(func(params mapCustomersEndpointsParams) {
 		srv := params.HTTPServer
 
-		srv.RouteBuilder().RegisterRoutes(func(server any) {
-			server.(*echo.Echo).GET("/", func(c echo.Context) error {
-				return c.String(http.StatusOK, fmt.Sprintf("%s is running", "customer write service"))
-			})
+		srv.RouteBuilder().Root().GET("/", func(c echo.Context) error {
+			return c.String(http.StatusOK, fmt.Sprintf("%s is running", "customer write service"))
 		})
-	}))
+	},
+		invoker.NamedDep("httpServerRef", constants.MainHTTPServer),
+	))
 }

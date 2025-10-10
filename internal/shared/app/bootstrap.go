@@ -20,9 +20,7 @@ func (b *Bootstrap) Run() error {
 		return syserrors.Wrap(err, "failed to initialize the application builder")
 	}
 
-	appBuilder.ProvideModule(
-		customers.ModuleFunc(appBuilder),
-	)
+	appBuilder.ProvideModule(customers.ModuleFunc(appBuilder))
 
 	appIface := appBuilder.Build()
 
@@ -31,10 +29,7 @@ func (b *Bootstrap) Run() error {
 		return syserrors.New("failed to cast application to CustomersWriteApplication")
 	}
 
-	if err := app.ConfigureCustomers(); err != nil {
-		return syserrors.Wrap(err, "failed to configure customers layer")
-	}
-
+	app.ConfigureCustomers()
 	app.MapCustomersEndpoints()
 
 	app.Logger().Info("Starting application...")
