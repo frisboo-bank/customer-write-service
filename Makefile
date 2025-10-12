@@ -12,15 +12,15 @@ GOARCH  ?= $(shell go env GOARCH)
 MARCH   := $(GOOS)-$(GOARCH)
 
 # Local DB info
-DB_TARGETS := db-main
+DB_TARGETS := customer-write
 
 # Local DB info
-db-main.DB_TYPE := postgres
-db-main.DB_CONTAINER_NAME := customer-write-db
-db-main.DB_PORT := 5432
-db-main.DB_USER := admin
-db-main.DB_PASS := admin
-db-main.DB_NAME := customer-write
+customer-write.DB_TYPE := postgres
+customer-write.DB_CONTAINER_NAME := customer-write-db
+customer-write.DB_PORT := 5432
+customer-write.DB_USER := admin
+customer-write.DB_PASS := admin
+customer-write.DB_NAME := customer-write
 
 # Build Flags
 LDFLAGS := \
