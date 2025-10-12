@@ -10,8 +10,6 @@ import (
 	"frisboo-bank/pkg/application/contracts"
 	"frisboo-bank/pkg/container/dependencies/invoker"
 	httpServerContacts "frisboo-bank/pkg/http/http_server/contracts"
-
-	"go.uber.org/dig"
 )
 
 type CustomersWriteServiceConfigurator struct {
@@ -33,8 +31,7 @@ func (c *CustomersWriteServiceConfigurator) ConfigureCustomers() {
 }
 
 type mapCustomersEndpointsParams struct {
-	dig.In
-	HTTPServer httpServerContacts.HTTPServer `name:"http-server:customer-write-service"`
+	HTTPServer httpServerContacts.HTTPServer `name:"httpServerRef"`
 }
 
 func (c *CustomersWriteServiceConfigurator) MapCustomersEndpoints() {
@@ -43,7 +40,7 @@ func (c *CustomersWriteServiceConfigurator) MapCustomersEndpoints() {
 
 		srv.RouteBuilder().Root().GET("/", func(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusOK)
-			fmt.Fprintf(w, "%s is running", constants.ServiceName)
+			_, _ = fmt.Fprintf(w, "%s is running", constants.ServiceName)
 		})
 	},
 		invoker.NamedDep("httpServerRef", constants.MainHTTPServer),

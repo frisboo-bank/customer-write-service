@@ -25,7 +25,7 @@ rpc-servers:
 
 database-clients:
   instances:
-    customer-write-db:
+    customer-write:
       type: postgres
       host: localhost
       port: 5432
@@ -48,5 +48,5 @@ loggers:
 migrations:
   instances:
     customer-write:
-      db: customer-write-db
+      db: customer-write
       migrationsDir: db/migrations
