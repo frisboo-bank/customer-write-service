@@ -1,6 +1,6 @@
 GOPATH:=$(shell go env GOPATH)
 
-MODULE  := frisboo-bank/customers-write-service
+MODULE  := frisboo-bank/customer-write-service
 
 # Project info
 BUILD   := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
@@ -12,12 +12,15 @@ GOARCH  ?= $(shell go env GOARCH)
 MARCH   := $(GOOS)-$(GOARCH)
 
 # Local DB info
-DB_TYPE := postgres
-DB_CONTAINER_NAME := customers-write-service-db
-DB_PORT := 5432
-DB_USER := admin
-DB_PASS := admin
-DB_NAME := customers-write-service
+DB_TARGETS := db-main
+
+# Local DB info
+db-main.DB_TYPE := postgres
+db-main.DB_CONTAINER_NAME := customer-write-db
+db-main.DB_PORT := 5432
+db-main.DB_USER := admin
+db-main.DB_PASS := admin
+db-main.DB_NAME := customer-write
 
 # Build Flags
 LDFLAGS := \
