@@ -1,7 +1,7 @@
 version: "2"
 cloud:
   organization: "frisboo-bank"
-  project: "customers-write-service"
+  project: "customer-write-service"
   hostname: "localhost"
 sql:
   - engine: postgresql

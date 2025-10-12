@@ -1,9 +1,10 @@
 package customers
 
 import (
-	"frisboo-bank/customers-write-service/internal/customers/constants"
-	"frisboo-bank/customers-write-service/internal/customers/contracts"
-	"frisboo-bank/customers-write-service/internal/customers/data/repositories"
+	"frisboo-bank/customer-write-service/internal/customers/constants"
+	"frisboo-bank/customer-write-service/internal/customers/contracts"
+	"frisboo-bank/customer-write-service/internal/customers/data/repositories"
+
 	applicationContracts "frisboo-bank/pkg/application/contracts"
 	"frisboo-bank/pkg/container/dependencies/module"
 	"frisboo-bank/pkg/container/dependencies/provider"

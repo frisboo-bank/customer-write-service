@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"frisboo-bank/customers-write-service/internal/shared/app"
+	"frisboo-bank/customer-write-service/internal/shared/app"
 
 	"frisboo-bank/pkg/application/command"
 	"github.com/pterm/pterm"
@@ -15,7 +15,7 @@ import (
 // // @contact.email contact@frisboo-bank.com
 func main() {
 	cli := command.NewApplicationCli(&command.ApplicationCliConfig{
-		Name: "customers-write-service",
+		Name: "customer-write-service",
 		Header: func() {
 			fmt.Println("")
 			_ = pterm.DefaultBigText.WithLetters(

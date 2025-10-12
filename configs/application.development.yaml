@@ -1,5 +1,5 @@
 app:
-  name: customers-write-service
+  name: customer-write-service
   logger: main
 
 container:
@@ -7,7 +7,7 @@ container:
 
 http-servers:
   instances:
-    customers-write-service:
+    main:
       type: echo
       host: 127.0.0.1
       port: 8000
@@ -16,7 +16,7 @@ http-servers:
 
 rpc-servers:
   instances:
-    customers-write-service:
+    main:
       type: grpc
       host: 127.0.0.1
       port: 9000
@@ -25,13 +25,13 @@ rpc-servers:
 
 database-clients:
   instances:
-    customers-write-service:
+    customer-write-db:
       type: postgres
       host: localhost
       port: 5432
       user: admin
       password: admin
-      database: customers-write-service
+      database: customer-write
       sslMode: false
 
 loggers:
@@ -39,14 +39,14 @@ loggers:
   level: debug
   instances:
     main:
-      prefix: customers-write-service
+      prefix: customer-write-service
     main-http-server:
-      prefix: customers-write-service (http-server)
+      prefix: customer-write-service (http-server)
     main-rpc-server:
-      prefix: customers-write-service (rpc-server)
+      prefix: customer-write-service (rpc-server)
 
 migrations:
   instances:
-    customers-write-service:
-      db: customers-write-service
+    customer-write:
+      db: customer-write-db
       migrationsDir: db/migrations

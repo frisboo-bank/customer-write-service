@@ -3,7 +3,7 @@ package app
 import (
 	"context"
 
-	"frisboo-bank/customers-write-service/internal/shared/configurations/customers"
+	"frisboo-bank/customer-write-service/internal/shared/configurations/customers"
 
 	"frisboo-bank/pkg/syserrors"
 )

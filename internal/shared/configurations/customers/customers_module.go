@@ -1,8 +1,8 @@
 package customers
 
 import (
-	"frisboo-bank/customers-write-service/internal/customers"
-	"frisboo-bank/customers-write-service/internal/shared/configurations/customers/infrastructure"
+	"frisboo-bank/customer-write-service/internal/customers"
+	"frisboo-bank/customer-write-service/internal/shared/configurations/customers/infrastructure"
 
 	applicationContracts "frisboo-bank/pkg/application/contracts"
 	"frisboo-bank/pkg/container/dependencies/module"
