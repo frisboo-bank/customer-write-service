@@ -4,9 +4,8 @@ go 1.25.1
 
 require (
 	github.com/gofrs/uuid v4.4.0+incompatible
-	github.com/pterm/pterm v0.12.81
+	github.com/pterm/pterm v0.12.82
 	github.com/spf13/cobra v1.10.1
-	go.uber.org/dig v1.19.0
 )
 
 require (
